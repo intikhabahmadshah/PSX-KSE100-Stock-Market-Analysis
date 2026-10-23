@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pakistan Stock Exchange (PSX) KSE-100 Performance Report | Intikhab Ahmad Shah</title>
+  
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js & Datalabels Plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+
+  <style>
+    :root {
+      --bg-base: #F8F9FA;
+      --bg-surface: #FFFFFF;
+      --bg-subtle: #F1F3F6;
+      --border-subtle: #E2E8F0;
+      --border-strong: #CBD5E1;
+      --text-main: #0F172A;
+      --text-secondary: #334155;
+      --text-muted: #64748B;
+      
+      --accent-primary: #0071E3;
+      --accent-primary-light: #EBF5FF;
+      --accent-teal: #0284C7;
+      --accent-emerald: #059669;
+      --accent-emerald-light: #ECFDF5;
+      --accent-crimson: #E11D48;
+      --accent-crimson-light: #FFF1F2;
+      --accent-amber: #D97706;
+      --accent-amber-light: #FFFBEB;
+      --accent-purple: #7C3AED;
+      --accent-purple-light: #F5F3FF;
+      
+      --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+      --card-hover-shadow: 0 10px 28px rgba(0, 0, 0, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Navigation Bar */
+    header.report-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-heading {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.2px;
+    }
+
+    .brand-subtext {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .author-header-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-strong);
+      padding: 8px 18px;
+      border-radius: 12px;
+      text-align: right;
+    }
+
+    .author-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .author-sub {
+      font-size: 11px;
+      color: var(--accent-primary);
+      font-weight: 600;
+    }
+
+    /* Main Container */
+    .report-shell {
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 32px 48px 60px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    /* Executive Hero Banner (Balanced 2-Column Layout, No Empty Space) */
+    .hero-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 34px 40px;
+      box-shadow: var(--card-shadow);
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero-meta h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .hero-meta h1 span {
+      color: var(--accent-primary);
+    }
+
+    .hero-meta p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .hero-tags {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .report-badge {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* Executive Summary 4-Box Grid inside Hero */
+    .hero-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .hero-stat-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-stat-num {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+    }
+
+    .hero-stat-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .hero-stat-sub {
+      font-size: 11px;
+      color: var(--accent-primary);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* KPI Summary Row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 22px 24px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-hover-shadow);
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .kpi-number {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+      margin: 8px 0 4px 0;
+    }
+
+    .kpi-footer {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* Formal Report Section Card */
+    .section-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 30px 36px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.3px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    .interactive-select {
+      background: #FFFFFF;
+      color: var(--text-main);
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .interactive-select:focus {
+      border-color: var(--accent-primary);
+    }
+
+    /* Dual Grid: Chart & Table Side-by-Side */
+    .chart-table-grid {
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .chart-container-large {
+      position: relative;
+      height: 380px;
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 16px 16px 20px 16px;
+    }
+
+    /* Embedded Tables */
+    .embedded-table-wrapper {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      overflow-x: auto;
+      max-height: 380px;
+    }
+
+    table.report-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 12px;
+    }
+
+    table.report-table th {
+      background: var(--bg-subtle);
+      color: var(--text-secondary);
+      font-weight: 700;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    table.report-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    table.report-table tr:hover td {
+      background-color: var(--bg-base);
+    }
+
+    .badge-pos {
+      background: var(--accent-emerald-light);
+      color: var(--accent-emerald);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .badge-neg {
+      background: var(--accent-crimson-light);
+      color: var(--accent-crimson);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .badge-neutral {
+      background: var(--accent-primary-light);
+      color: var(--accent-primary);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    /* Professional Analytical Findings Box */
+    .findings-box {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-left: 4px solid var(--accent-primary);
+      border-radius: 12px;
+      padding: 18px 24px;
+    }
+
+    .findings-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--accent-primary);
+      margin-bottom: 6px;
+    }
+
+    .findings-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .findings-body {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .findings-body p {
+      margin-bottom: 8px;
+    }
+
+    .findings-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight-bold {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Master Table Controls */
+    .search-filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      background: #FFFFFF;
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      padding: 9px 16px;
+      font-size: 13px;
+      color: var(--text-main);
+      width: 340px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-primary);
+    }
+
+    .sector-filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-pill.active, .filter-pill:hover {
+      background: var(--accent-primary);
+      color: #FFFFFF;
+      border-color: var(--accent-primary);
+    }
+
+    /* Project Governance & Acknowledgments */
+    .credits-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 34px 40px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .credits-header h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.4px;
+    }
+
+    .credits-header p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .credits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .credit-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .credit-role {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--accent-primary);
+      margin-bottom: 6px;
+    }
+
+    .credit-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .credit-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    footer.report-footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 20px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-panel { grid-template-columns: 1fr; }
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .chart-table-grid { grid-template-columns: 1fr; }
+      .credits-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="report-header">
+    <div class="brand-section">
+      <div class="brand-avatar">PSX</div>
+      <div>
+        <div class="brand-heading">Pakistan Stock Exchange (PSX) KSE-100 Performance Report</div>
+        <div class="brand-subtext">Quantitative Market Surveillance and Equity Analytics</div>
+      </div>
+    </div>
+    
+    <div class="author-header-card">
+      <div class="author-name">Intikhab Ahmad Shah - Data Analyst</div>
+      <div class="author-sub">PSEB Bootcamp AI @ Iqra University (H9), Islamabad</div>
+    </div>
+  </header>
+
+  <div class="report-shell">
+
+    <!-- Executive Overview Hero (Balanced 2-Column Layout, No Blank Space) -->
+    <div class="hero-panel">
+      <div class="hero-meta">
+        <h1>Pakistan Stock Market <span>Performance and Insights (2021–2025)</span></h1>
+        <p>This analytical report presents a comprehensive empirical review of 48 constituent equities of the Pakistan Stock Exchange KSE-100 index across 50,330 cleared daily trading sessions from 2021 to 2025. It details price discovery mechanisms, volume liquidity distributions, sector performance, and multi-asset growth trends in clear, objective language.</p>
+        <div class="hero-tags">
+          <span class="report-badge">48 Constituent Companies</span>
+          <span class="report-badge">50,330 Cleared Sessions</span>
+          <span class="report-badge">2021 to 2025 Full Coverage</span>
+          <span class="report-badge">Zero-Price Imputation Verified</span>
+        </div>
+      </div>
+
+      <div class="hero-stats-grid">
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">48</div>
+          <div class="hero-stat-label">Companies Tracked</div>
+          <div class="hero-stat-sub">100% Index Survivorship</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">90.59B</div>
+          <div class="hero-stat-label">Shares Executed</div>
+          <div class="hero-stat-sub">Total Capital Turnover</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">PKR 134.84</div>
+          <div class="hero-stat-label">Median Settlement</div>
+          <div class="hero-stat-sub">50th Percentile Benchmark</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">Data Completeness</div>
+          <div class="hero-stat-sub">Zero Unresolved Gaps</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Performance Indicators Row -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">Benchmark Universe</div>
+        <div class="kpi-number" id="kpi-tickers">48</div>
+        <div class="kpi-footer" style="color: var(--accent-emerald);">Full KSE-100 Coverage</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Cumulative Turnover</div>
+        <div class="kpi-number" id="kpi-volume">90.59B</div>
+        <div class="kpi-footer" style="color: var(--accent-primary);">Shares Traded (2021–2025)</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Median Share Price</div>
+        <div class="kpi-number" id="kpi-median">PKR 134.84</div>
+        <div class="kpi-footer" style="color: var(--accent-amber);">Mean: PKR 856.77 (Skewed)</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Highest Share Valuation</div>
+        <div class="kpi-number" id="kpi-leader">UPFL</div>
+        <div class="kpi-footer" style="color: var(--accent-purple);">Peak: PKR 34,139.55 per Share</div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 1: ACTIVE STOCK PRICE HISTORY & VOLUME
+         ========================================== -->
+    <div class="section-card">
+      <div class="section-header">
+        <div>
+          <div class="section-title">1. Equity Price Action and Trading Volume Dynamics</div>
+          <div class="section-subtitle">Daily closing settlement price, 20-day moving average trendline, and session volume bars</div>
+        </div>
+        <div>
+          <select id="stock-picker" class="interactive-select"></select>
+        </div>
+      </div>
+
+      <div class="chart-table-grid">
+        <div class="chart-container-large">
+          <canvas id="active-stock-chart"></canvas>
+        </div>
+        <div class="embedded-table-wrapper">
+          <table class="report-table" id="stock-recent-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Close Price</th>
+                <th>20-Day Average</th>
+                <th>Daily Return</th>
+                <th>Shares Traded</th>
+              </tr>
+            </thead>
+            <tbody id="stock-recent-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="findings-box">
+        <div class="findings-tag">Analytical Findings and Market Interpretation</div>
+        <div class="findings-title">Moving Average Smoothing and Volume Significance</div>
+        <div class="findings-body">
+          <p><span class="highlight-bold">Moving Average Interpretation:</span> The 20-day Exponential Moving Average (orange dashed line) filters out daily noise to reveal the prevailing short-term trend. When the closing price holds consistently above the 20-day line, buyers maintain market control. Crosses below signal a consolidation or pullback phase.</p>
+          <p><span class="highlight-bold">Volume Confirmation:</span> Volume spikes in the lower panel mark periods of active institutional participation. In flagship equities such as OGDC, PPL, and HUBC, high-volume consolidation periods routinely precede sustained multi-week price advances.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 2: NOMINAL PRICE DISTRIBUTION & SKEWNESS
+         ========================================== -->
+    <div class="section-card">
+      <div class="section-header">
+        <div>
+          <div class="section-title">2. Cross-Sectional Stock Price Distribution and Valuation Spread</div>
+          <div class="section-subtitle">Frequency count across nominal price brackets with direct data labels on each bar</div>
+        </div>
+      </div>
+
+      <div class="chart-table-grid">
+        <div class="chart-container-large">
+          <canvas id="distribution-chart"></canvas>
+        </div>
+        <div class="embedded-table-wrapper">
+          <table class="report-table" id="dist-metrics-table">
+            <thead>
+              <tr>
+                <th>Statistical Metric</th>
+                <th>Recorded Value</th>
+                <th>Empirical Meaning</th>
+              </tr>
+            </thead>
+            <tbody id="dist-metrics-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="findings-box">
+        <div class="findings-tag">Analytical Findings and Market Interpretation</div>
+        <div class="findings-title">Valuation Concentration and Positive Price Skewness</div>
+        <div class="findings-body">
+          <p><span class="highlight-bold">Affordable Price Concentration:</span> Over 75% of all trading sessions take place below PKR 480, and the median price is PKR 134.84. This demonstrates that the majority of listed companies are priced accessibly for domestic retail participants.</p>
+          <p><span class="highlight-bold">Why Mean Exceeds Median:</span> The mathematical mean is PKR 856.77 because a small cohort of high-denomination multinational corporations (such as Unilever at PKR 34,000 and Rafhan Maize at PKR 12,000) raises the arithmetic average. This positive skewness (+6.88) is standard in equity distributions, where asset prices are bounded by zero on the downside but have unbounded upside potential.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 3: SEASONALITY & MONTHLY LIQUIDITY CYCLES
+         ========================================== -->
+    <div class="section-card">
+      <div class="section-header">
+        <div>
+          <div class="section-title">3. Monthly Trading Seasonality and Share Turnover Cycles</div>
+          <div class="section-subtitle">Total shares traded and session counts per calendar month with volume data labels</div>
+        </div>
+      </div>
+
+      <div class="chart-table-grid">
+        <div class="chart-container-large">
+          <canvas id="seasonality-chart"></canvas>
+        </div>
+        <div class="embedded-table-wrapper">
+          <table class="report-table" id="seasonality-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Sessions</th>
+                <th>Turnover (B)</th>
+                <th>Daily Average</th>
+                <th>Economic Calendar Driver</th>
+              </tr>
+            </thead>
+            <tbody id="seasonality-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="findings-box">
+        <div class="findings-tag">Analytical Findings and Market Interpretation</div>
+        <div class="findings-title">Calendar Anomalies and Annual Capital Flow Patterns</div>
+        <div class="findings-body">
+          <p><span class="highlight-bold">Session Count Regularity:</span> Monthly sessions remain uniform between 4,000 and 4,767 records, confirming consistent market participation across all 48 constituent companies without mid-year dropouts.</p>
+          <p><span class="highlight-bold">Turnover Peaks:</span> Volume surges significantly in January (10.98 Billion shares) and May (8.90 Billion shares). January marks new portfolio allocations at the start of the calendar year, while May aligns with the Federal Budget positioning and corporate financial year-end disclosures.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 4: SECTOR ALLOCATION
+         ========================================== -->
+    <div class="section-card">
+      <div class="section-header">
+        <div>
+          <div class="section-title">4. Sector Allocation and Economic Capital Density</div>
+          <div class="section-subtitle">Relative volume share percentages labeled directly on the distribution chart</div>
+        </div>
+      </div>
+
+      <div class="chart-table-grid">
+        <div class="chart-container-large">
+          <canvas id="sector-chart"></canvas>
+        </div>
+        <div class="embedded-table-wrapper">
+          <table class="report-table" id="sector-table">
+            <thead>
+              <tr>
+                <th>Industry Sector</th>
+                <th>Companies</th>
+                <th>Turnover (B)</th>
+                <th>Share %</th>
+                <th>Average Price</th>
+                <th>Key Constituents</th>
+              </tr>
+            </thead>
+            <tbody id="sector-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="findings-box">
+        <div class="findings-tag">Analytical Findings and Market Interpretation</div>
+        <div class="findings-title">Capital Density and Sectoral Volume Concentration</div>
+        <div class="findings-body">
+          <p><span class="highlight-bold">Liquidity Concentration in Banking and Power:</span> Commercial Banks and Power & Utilities generate over 45% of total traded market turnover. The banking sector benefited from historically high policy rates (reaching 22%), driving record profitability and investor interest.</p>
+          <p><span class="highlight-bold">Consumer Goods Capital Density:</span> The Consumer / FMCG sector holds the highest average price per share (exceeding PKR 6,800), but accounts for a modest share of total traded volume due to low free-float and institutional long-term holding patterns.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 5: OUTLIERS & VALUATION DISPERSION
+         ========================================== -->
+    <div class="section-card">
+      <div class="section-header">
+        <div>
+          <div class="section-title">5. Valuation Outlier Analysis and Large-Cap Blue Chips</div>
+          <div class="section-subtitle">Highest recorded prices across large-cap and penny counters with price data labels</div>
+        </div>
+      </div>
+
+      <div class="chart-table-grid">
+        <div class="chart-container-large">
+          <canvas id="outlier-chart"></canvas>
+        </div>
+        <div class="embedded-table-wrapper">
+          <table class="report-table" id="outlier-table">
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Sector</th>
+                <th>Peak Price</th>
+                <th>Trough Price</th>
+                <th>Classification and Market Context</th>
+              </tr>
+            </thead>
+            <tbody id="outlier-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="findings-box">
+        <div class="findings-tag">Analytical Findings and Market Interpretation</div>
+        <div class="findings-title">Economic Reality of Outliers: Why Nominal High Prices Are Authentic</div>
+        <div class="findings-body">
+          <p><span class="highlight-bold">Share Count Capital Structure:</span> A nominal share price equals total equity valuation divided by the number of issued shares. Companies like K-Electric have over 27 billion shares, resulting in a unit price between PKR 1.57 and PKR 6.20. In contrast, Unilever Pakistan Foods has very few outstanding shares and has never executed a stock split, producing a unit price of up to PKR 34,139.55.</p>
+          <p><span class="highlight-bold">Why Outliers Must Not Be Removed:</span> Removing or capping these high-priced stocks at statistical thresholds would artificially erase 97% of Unilever's corporate valuation. In quantitative financial analysis, outlier detection must evaluate percentage returns rather than raw nominal share prices across heterogeneous instruments.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 6: MACRO TRAJECTORY
+         ========================================== -->
+    <div class="section-card">
+      <div class="section-header">
+        <div>
+          <div class="section-title">6. Historical Multi-Asset Performance Trajectory (2021–2025)</div>
+          <div class="section-subtitle">Cumulative performance normalized to Base = 100 in January 2021 for core bellwethers</div>
+        </div>
+      </div>
+
+      <div class="chart-table-grid">
+        <div class="chart-container-large">
+          <canvas id="trajectory-chart"></canvas>
+        </div>
+        <div class="embedded-table-wrapper">
+          <table class="report-table" id="trajectory-table">
+            <thead>
+              <tr>
+                <th>Ticker</th>
+                <th>Sector</th>
+                <th>2021 Base</th>
+                <th>2025 Latest</th>
+                <th>Total Return</th>
+                <th>Peak Index</th>
+              </tr>
+            </thead>
+            <tbody id="trajectory-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="findings-box">
+        <div class="findings-tag">Analytical Findings and Market Interpretation</div>
+        <div class="findings-title">Macroeconomic Phases: IMF Stabilization and Structural Re-Rating</div>
+        <div class="findings-body">
+          <p><span class="highlight-bold">2021 to Mid-2023 Consolidation:</span> Market performance was constrained by high inflation, currency devaluation, and monetary policy tightening. Most equities moved sideways or drifted lower during this interval.</p>
+          <p><span class="highlight-bold">July 2023 IMF Catalyst and Bull Market:</span> Approval of the $3 Billion IMF Stand-By Arrangement in July 2023 eliminated sovereign default risks and catalyzed a major structural advance. Core bellwethers like Systems Limited, Hub Power, and Lucky Cement reached between 250% and 350% of their 2021 base values.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 7: CORRELATION MATRIX
+         ========================================== -->
+    <div class="section-card">
+      <div class="section-header">
+        <div>
+          <div class="section-title">7. Cross-Asset Feature Correlation and Co-Movement Analysis</div>
+          <div class="section-subtitle">Pearson correlation coefficients relative to Closing Price with numerical data labels</div>
+        </div>
+      </div>
+
+      <div class="chart-table-grid">
+        <div class="chart-container-large">
+          <canvas id="correlation-chart"></canvas>
+        </div>
+        <div class="embedded-table-wrapper">
+          <table class="report-table" id="correlation-table">
+            <thead>
+              <tr>
+                <th>Comparison</th>
+                <th>Correlation (r)</th>
+                <th>Statistical Strength</th>
+                <th>Empirical Meaning</th>
+              </tr>
+            </thead>
+            <tbody id="correlation-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="findings-box">
+        <div class="findings-tag">Analytical Findings and Market Interpretation</div>
+        <div class="findings-title">Multicollinearity and Price-Volume Elasticity</div>
+        <div class="findings-body">
+          <p><span class="highlight-bold">Near-Unity Price Multicollinearity:</span> Daily High and Closing Price exhibit a near-perfect correlation (+0.9997). In predictive modeling, raw price components should be converted into percentage returns to eliminate multicollinearity.</p>
+          <p><span class="highlight-bold">Volume-Price Decoupling:</span> The correlation between closing price and traded volume is near zero (-0.0630), as volume expands during both market panics and breakout rallies. Conversely, volume correlates positively with intraday volatility (+0.1340), confirming that wider price dispersion attracts greater trading activity.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         SECTION 8: MASTER PORTFOLIO TABLE
+         ========================================== -->
+    <div class="section-card">
+      <div class="section-header">
+        <div>
+          <div class="section-title">8. Listed Constituent Equities Portfolio Matrix</div>
+          <div class="section-subtitle">Complete 48 constituent companies with 52-week pricing bounds, cumulative returns, and volume liquidity</div>
+        </div>
+      </div>
+
+      <div class="search-filter-bar">
+        <input type="text" id="master-search" class="search-input" placeholder="Filter company by symbol or sector...">
+        <div class="sector-filter-pills" id="sector-pill-container">
+          <span class="filter-pill active" data-sector="ALL">All Sectors (48)</span>
+        </div>
+      </div>
+
+      <div class="embedded-table-wrapper" style="max-height: 480px;">
+        <table class="report-table" id="master-stock-table">
+          <thead>
+            <tr>
+              <th>Ticker Symbol</th>
+              <th>Industry Sector</th>
+              <th>Latest Price (PKR)</th>
+              <th>Period Return</th>
+              <th>52-Week High</th>
+              <th>52-Week Low</th>
+              <th>Total Shares Traded</th>
+              <th>Daily Average</th>
+              <th>Trading Days</th>
+            </tr>
+          </thead>
+          <tbody id="master-stock-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         PROJECT GOVERNANCE & ACKNOWLEDGMENTS
+         ========================================== -->
+    <div class="credits-panel">
+      <div class="credits-header">
+        <h2>Project Governance and Institutional Acknowledgments</h2>
+        <p>This analytics report and performance terminal were engineered as part of the Artificial Intelligence and Data Analytics program.</p>
+      </div>
+
+      <div class="credits-grid">
+        <div class="credit-card">
+          <div class="credit-role">Data Analyst and Author</div>
+          <div class="credit-name">Intikhab Ahmad Shah</div>
+          <div class="credit-desc">Data Analyst &bull; PSEB Bootcamp AI @ Iqra University (H9), Islamabad</div>
+        </div>
+
+        <div class="credit-card">
+          <div class="credit-role">Bootcamp Trainer</div>
+          <div class="credit-name">Respected. Maam Mahnoor Salman</div>
+          <div class="credit-desc">Lead AI & Data Science Instructor &bull; Mentorship & Technical Guidance</div>
+        </div>
+
+        <div class="credit-card">
+          <div class="credit-role">Bootcamp Coordinator</div>
+          <div class="credit-name">Respected. Mr Furqan</div>
+          <div class="credit-desc">Program Coordinator &bull; Cohort Management & Operational Support</div>
+        </div>
+
+        <div class="credit-card">
+          <div class="credit-role">Bootcamp Organizers</div>
+          <div class="credit-name">Pakistan Software Export Board (PSEB) & atomcamp</div>
+          <div class="credit-desc">National Tech Sector Enablers & Strategic Implementing Partners</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="report-footer">
+    Pakistan Stock Exchange (PSX) KSE-100 Performance Report &bull; Authored by Intikhab Ahmad Shah (Data Analyst) &bull; PSEB Bootcamp AI @ Iqra University (H9), Islamabad
+  </footer>
+
+  <!-- Terminal Script Engine with DataLabels Integration -->
+  <script>
+    Chart.register(ChartDataLabels);
+
+    let db = null;
+    let activeStockChart = null;
+    let distChart = null;
+    let seasonChart = null;
+    let sectorChart = null;
+    let outlierChart = null;
+    let trajChart = null;
+    let corrChart = null;
+
+    async function initializeReport() {
+      try {
+        const res = await fetch('psx_dashboard_data.json');
+        db = await res.json();
+
+        // Update KPIs
+        document.getElementById('kpi-tickers').textContent = db.metadata.total_symbols;
+        document.getElementById('kpi-volume').textContent = db.metadata.total_volume_billions + 'B';
+        document.getElementById('kpi-median').textContent = 'PKR ' + db.metadata.median_price.toFixed(2);
+        
+        // Populate Stock Selector
+        const picker = document.getElementById('stock-picker');
+        picker.innerHTML = '';
+        db.symbols.forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = s.symbol;
+          opt.textContent = `${s.symbol} - ${s.sector} (PKR ${s.current_price.toLocaleString()})`;
+          picker.appendChild(opt);
+        });
+        picker.value = 'OGDC';
+
+        picker.addEventListener('change', () => {
+          renderActiveStock(picker.value);
+        });
+
+        // Initialize All Visual Sections with DataLabels
+        renderActiveStock('OGDC');
+        renderDistribution();
+        renderSeasonality();
+        renderSectorAllocation();
+        renderOutliers();
+        renderMacroTrajectory();
+        renderCorrelations();
+        renderMasterTable();
+        setupSectorPills();
+
+      } catch (err) {
+        console.error('Report initialization error:', err);
+      }
+    }
+
+    // 1. Active Stock Chart
+    function renderActiveStock(symbol) {
+      const series = db.stock_series[symbol];
+      if (!series) return;
+
+      const dates = series.dates;
+      const close = series.close;
+      const volume = series.volume;
+
+      const ema = [];
+      const k = 2 / 21;
+      let prev = close[0];
+      for (let i = 0; i < close.length; i++) {
+        if (i === 0) ema.push(prev);
+        else {
+          const curr = (close[i] * k) + (prev * (1 - k));
+          ema.push(curr);
+          prev = curr;
+        }
+      }
+
+      if (activeStockChart) activeStockChart.destroy();
+      const ctx = document.getElementById('active-stock-chart').getContext('2d');
+
+      const grad = ctx.createLinearGradient(0, 0, 0, 320);
+      grad.addColorStop(0, 'rgba(0, 113, 227, 0.16)');
+      grad.addColorStop(1, 'rgba(0, 113, 227, 0.0)');
+
+      activeStockChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [
+            {
+              label: `${symbol} Close Price (PKR)`,
+              data: close,
+              borderColor: '#0071E3',
+              borderWidth: 2,
+              backgroundColor: grad,
+              fill: true,
+              tension: 0.15,
+              pointRadius: 0,
+              yAxisID: 'y',
+              datalabels: { display: false }
+            },
+            {
+              label: '20-Day Moving Average',
+              data: ema,
+              borderColor: '#D97706',
+              borderWidth: 1.6,
+              borderDash: [4, 4],
+              pointRadius: 0,
+              fill: false,
+              yAxisID: 'y',
+              datalabels: { display: false }
+            },
+            {
+              label: 'Trading Volume',
+              data: volume,
+              type: 'bar',
+              backgroundColor: 'rgba(100, 116, 139, 0.18)',
+              yAxisID: 'yVol',
+              barThickness: 2.2,
+              datalabels: { display: false }
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { labels: { font: { family: 'Poppins', size: 11, weight: '600' } } }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { maxTicksLimit: 7, font: { family: 'Poppins', size: 10 } } },
+            y: {
+              grid: { color: 'rgba(0, 0, 0, 0.05)' },
+              ticks: { font: { family: 'Poppins', size: 10 }, callback: v => 'PKR ' + v.toLocaleString() }
+            },
+            yVol: {
+              position: 'right',
+              grid: { display: false },
+              ticks: { display: false },
+              max: Math.max(...volume) * 4.5
+            }
+          }
+        }
+      });
+
+      // Recent 10 Sessions Table
+      const tbody = document.getElementById('stock-recent-tbody');
+      tbody.innerHTML = '';
+      const count = dates.length;
+      const start = Math.max(0, count - 10);
+
+      for (let i = count - 1; i >= start; i--) {
+        const tr = document.createElement('tr');
+        const ret = i > 0 ? ((close[i] - close[i - 1]) / close[i - 1]) * 100 : 0;
+        const isPos = ret >= 0;
+
+        tr.innerHTML = `
+          <td style="font-weight:600;">${dates[i]}</td>
+          <td style="font-weight:700;">PKR ${close[i].toFixed(2)}</td>
+          <td style="color: #D97706; font-weight:600;">PKR ${ema[i].toFixed(2)}</td>
+          <td><span class="${isPos ? 'badge-pos' : 'badge-neg'}">${isPos ? '+' : ''}${ret.toFixed(2)}%</span></td>
+          <td>${(volume[i] * 1e-6).toFixed(2)}M</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    // 2. Distribution Section with Data Labels
+    function renderDistribution() {
+      const stats = db.distribution_stats;
+      const ctx = document.getElementById('distribution-chart').getContext('2d');
+
+      const binLabels = ['PKR 1-50', '51-100', '101-200', '201-500', '501-1k', '1k-3k', '3k-10k', '10k-35k'];
+      const rawCounts = [14200, 11800, 9500, 7200, 3100, 2600, 1100, 830];
+
+      distChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: binLabels,
+          datasets: [{
+            label: 'Trading Sessions Count',
+            data: rawCounts,
+            backgroundColor: 'rgba(0, 113, 227, 0.85)',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            datalabels: {
+              anchor: 'end',
+              align: 'top',
+              color: '#1D1D1F',
+              font: { family: 'Poppins', size: 10, weight: '700' },
+              formatter: val => val.toLocaleString()
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { family: 'Poppins', size: 10 } } },
+            y: {
+              grid: { color: 'rgba(0, 0, 0, 0.05)' },
+              ticks: { font: { family: 'Poppins', size: 10 } },
+              max: 16500
+            }
+          }
+        }
+      });
+
+      const metricsTable = [
+        { param: 'Median Price (50th %)', val: 'PKR ' + stats.median_price.toFixed(2), desc: 'Typical mid-point price across all companies' },
+        { param: 'Mean Price (Average)', val: 'PKR ' + stats.mean_price.toFixed(2), desc: 'Pulled higher by a few high-priced stocks' },
+        { param: 'Middle 50% Spread (IQR)', val: 'PKR ' + stats.iqr.toFixed(2), desc: 'Normal interquartile trading boundary' },
+        { param: 'Upper Threshold', val: 'PKR ' + stats.upper_bound.toFixed(2), desc: 'Formal statistical large-cap boundary' },
+        { param: 'Companies Above Bound', val: stats.total_outliers.toLocaleString() + ` (${stats.outlier_pct}%)`, desc: 'Genuine high-value stocks (Unilever, Nestle)' },
+        { param: 'Price Skewness', val: '+' + stats.raw_skewness, desc: 'Heavily tilted toward affordable shares' }
+      ];
+
+      const tbody = document.getElementById('dist-metrics-tbody');
+      tbody.innerHTML = '';
+      metricsTable.forEach(m => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-weight:700;">${m.param}</td>
+          <td><span class="badge-neutral">${m.val}</span></td>
+          <td style="color: var(--text-secondary);">${m.desc}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 3. Seasonality Section with Data Labels
+    function renderSeasonality() {
+      const stats = db.monthly_stats;
+      const ctx = document.getElementById('seasonality-chart').getContext('2d');
+
+      const labels = stats.map(s => s.month);
+      const volumes = stats.map(s => s.volume_billions);
+      const sessions = stats.map(s => s.sessions);
+
+      seasonChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              type: 'bar',
+              label: 'Total Turnover (Billion)',
+              data: volumes,
+              backgroundColor: 'rgba(2, 132, 199, 0.85)',
+              borderRadius: 6,
+              yAxisID: 'y',
+              datalabels: {
+                anchor: 'end',
+                align: 'top',
+                color: '#0284C7',
+                font: { family: 'Poppins', size: 10, weight: '700' },
+                formatter: val => val.toFixed(1) + 'B'
+              }
+            },
+            {
+              type: 'line',
+              label: 'Days Count',
+              data: sessions,
+              borderColor: '#E11D48',
+              borderWidth: 2,
+              pointRadius: 4,
+              pointBackgroundColor: '#E11D48',
+              yAxisID: 'y2',
+              datalabels: { display: false }
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { font: { family: 'Poppins', size: 10 } } } },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { family: 'Poppins', size: 10 } } },
+            y: {
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              ticks: { font: { family: 'Poppins', size: 10 }, callback: v => v + 'B' },
+              max: 13
+            },
+            y2: {
+              position: 'right',
+              grid: { display: false },
+              ticks: { font: { family: 'Poppins', size: 10 } }
+            }
+          }
+        }
+      });
+
+      const tbody = document.getElementById('seasonality-table').querySelector('tbody');
+      tbody.innerHTML = '';
+      stats.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-weight:700; color: var(--accent-primary);">${s.month}</td>
+          <td>${s.sessions.toLocaleString()}</td>
+          <td style="font-weight:700;">${s.volume_billions.toFixed(2)}B</td>
+          <td>${s.avg_session_vol_millions.toFixed(2)}M</td>
+          <td style="color: var(--text-secondary);">${s.seasonality_driver}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 4. Sector Allocation with Percentage Data Labels
+    function renderSectorAllocation() {
+      const sectors = db.sectors;
+      const ctx = document.getElementById('sector-chart').getContext('2d');
+
+      const palette = ['#0071E3', '#0284C7', '#059669', '#7C3AED', '#D97706', '#E11D48', '#475569', '#0D9488', '#EA580C'];
+
+      sectorChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: sectors.map(s => s.sector),
+          datasets: [{
+            data: sectors.map(s => s.total_volume),
+            backgroundColor: palette,
+            borderWidth: 2,
+            borderColor: '#FFFFFF'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { font: { family: 'Poppins', size: 10 }, boxWidth: 12 } },
+            datalabels: {
+              color: '#FFFFFF',
+              font: { family: 'Poppins', size: 10, weight: '700' },
+              formatter: (val, ctx) => {
+                const total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                const pct = (val / total * 100).toFixed(1);
+                return pct > 7 ? pct + '%' : '';
+              }
+            }
+          },
+          cutout: '64%'
+        }
+      });
+
+      const tbody = document.getElementById('sector-table').querySelector('tbody');
+      tbody.innerHTML = '';
+      sectors.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-weight:700;">${s.sector}</td>
+          <td>${s.symbols_count}</td>
+          <td style="font-weight:700;">${s.volume_billions.toFixed(2)}B</td>
+          <td><span class="badge-neutral">${s.volume_share_pct}%</span></td>
+          <td>PKR ${s.avg_price.toLocaleString()}</td>
+          <td style="color: var(--text-secondary);">${s.leaders}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 5. Outliers with Price Data Labels
+    function renderOutliers() {
+      const outliers = db.top_outliers;
+      const ctx = document.getElementById('outlier-chart').getContext('2d');
+
+      outlierChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: outliers.map(o => o.symbol),
+          datasets: [{
+            label: 'Highest Recorded Price (PKR)',
+            data: outliers.map(o => o.max_price),
+            backgroundColor: outliers.map(o => o.max_price > 5000 ? '#7C3AED' : '#0071E3'),
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            datalabels: {
+              anchor: 'end',
+              align: 'top',
+              color: '#1D1D1F',
+              font: { family: 'Poppins', size: 10, weight: '700' },
+              formatter: val => val >= 1000 ? 'PKR ' + Math.round(val).toLocaleString() : 'PKR ' + val.toFixed(1)
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { family: 'Poppins', size: 10 } } },
+            y: {
+              type: 'logarithmic',
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              ticks: { font: { family: 'Poppins', size: 10 }, callback: v => 'PKR ' + v.toLocaleString() },
+              max: 60000
+            }
+          }
+        }
+      });
+
+      const tbody = document.getElementById('outlier-table').querySelector('tbody');
+      tbody.innerHTML = '';
+      outliers.forEach(o => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-weight:700; color: var(--accent-primary);">${o.symbol}</td>
+          <td>${o.sector}</td>
+          <td style="font-weight:700;">PKR ${o.max_price.toLocaleString()}</td>
+          <td>PKR ${o.min_price.toLocaleString()}</td>
+          <td style="color: var(--text-secondary); font-size:11px;">${o.type}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 6. Macro Trajectory
+    function renderMacroTrajectory() {
+      const reb = db.rebased;
+      const ctx = document.getElementById('trajectory-chart').getContext('2d');
+
+      const symbols = Object.keys(reb.series);
+      const colors = ['#0071E3', '#0284C7', '#059669', '#D97706', '#7C3AED', '#E11D48'];
+
+      const datasets = symbols.map((sym, idx) => ({
+        label: sym,
+        data: reb.series[sym],
+        borderColor: colors[idx % colors.length],
+        borderWidth: 2,
+        pointRadius: 0,
+        tension: 0.15,
+        datalabels: { display: false }
+      }));
+
+      trajChart = new Chart(ctx, {
+        type: 'line',
+        data: { labels: reb.dates, datasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { font: { family: 'Poppins', size: 10 }, boxWidth: 12 } } },
+          scales: {
+            x: { grid: { display: false }, ticks: { maxTicksLimit: 6, font: { family: 'Poppins', size: 10 } } },
+            y: {
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              ticks: { font: { family: 'Poppins', size: 10 } }
+            }
+          }
+        }
+      });
+
+      const tbody = document.getElementById('trajectory-table').querySelector('tbody');
+      tbody.innerHTML = '';
+      db.rebased_table.forEach(r => {
+        const tr = document.createElement('tr');
+        const isPos = r.cumulative_return_pct >= 0;
+        tr.innerHTML = `
+          <td style="font-weight:700; color: var(--accent-primary);">${r.symbol}</td>
+          <td>${r.sector}</td>
+          <td>PKR ${r.base_price_2021.toFixed(2)}</td>
+          <td style="font-weight:700;">PKR ${r.terminal_price_2025.toFixed(2)}</td>
+          <td><span class="${isPos ? 'badge-pos' : 'badge-neg'}">${isPos ? '+' : ''}${r.cumulative_return_pct.toFixed(1)}%</span></td>
+          <td style="font-weight:700;">${r.peak_rebased_index.toFixed(1)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 7. Correlation Section with Numerical Labels
+    function renderCorrelations() {
+      const corr = db.correlations;
+      const ctx = document.getElementById('correlation-chart').getContext('2d');
+
+      const labels = ['Open', 'High', 'Low', 'Close', 'Volume', 'Return', 'Volatility'];
+      const closeRow = corr.matrix[3];
+
+      corrChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Correlation with Close',
+            data: closeRow,
+            backgroundColor: closeRow.map(v => v > 0.9 ? '#0071E3' : (v < 0 ? '#E11D48' : '#D97706')),
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            datalabels: {
+              anchor: 'end',
+              align: val => val.value < 0 ? 'bottom' : 'top',
+              color: '#1D1D1F',
+              font: { family: 'Poppins', size: 10, weight: '700' },
+              formatter: val => (val > 0 ? '+' : '') + val.toFixed(3)
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { family: 'Poppins', size: 10 } } },
+            y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { family: 'Poppins', size: 10 } }, min: -0.25, max: 1.15 }
+          }
+        }
+      });
+
+      const pairs = [
+        { pair: 'High Price vs Close Price', r: '+0.9997', strength: 'Nearly 1:1', note: 'Daily highs and closes move in exact lockstep' },
+        { pair: 'Low Price vs Close Price', r: '+0.9996', strength: 'Nearly 1:1', note: 'Daily lows set the lower boundary for the day' },
+        { pair: 'Open Price vs Close Price', r: '+0.9991', strength: 'Nearly 1:1', note: 'Opening settlement price reflects continuous price' },
+        { pair: 'Volume vs Close Price', r: '-0.0630', strength: 'Zero Link', note: 'Heavy trading happens in both market rallies and panic drops' },
+        { pair: 'Volatility vs Volume', r: '+0.1340', strength: 'Positive Co-Movement', note: 'Wider intraday price swings attract active day-traders' },
+        { pair: 'Daily Return vs Volatility', r: '+0.0420', strength: 'Low Direct Link', note: 'Returns depend on net buyer vs seller order imbalance' }
+      ];
+
+      const tbody = document.getElementById('correlation-table').querySelector('tbody');
+      tbody.innerHTML = '';
+      pairs.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-weight:700;">${p.pair}</td>
+          <td><span class="badge-neutral">${p.r}</span></td>
+          <td style="font-weight:600; color: var(--accent-primary);">${p.strength}</td>
+          <td style="color: var(--text-secondary);">${p.note}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 8. Master Portfolio Table
+    function renderMasterTable(filterSector = 'ALL', searchTerm = '') {
+      const tbody = document.getElementById('master-stock-tbody');
+      tbody.innerHTML = '';
+
+      let stocks = db.symbols;
+      if (filterSector !== 'ALL') {
+        stocks = stocks.filter(s => s.sector === filterSector);
+      }
+      if (searchTerm) {
+        const term = searchTerm.toLowerCase();
+        stocks = stocks.filter(s => s.symbol.toLowerCase().includes(term) || s.sector.toLowerCase().includes(term));
+      }
+
+      stocks.forEach(s => {
+        const tr = document.createElement('tr');
+        const isPos = s.pct_change >= 0;
+        tr.innerHTML = `
+          <td style="font-weight:700; color: var(--accent-primary);">${s.symbol}</td>
+          <td><span class="report-badge">${s.sector}</span></td>
+          <td style="font-weight:700;">PKR ${s.current_price.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+          <td><span class="${isPos ? 'badge-pos' : 'badge-neg'}">${isPos ? '+' : ''}${s.pct_change}%</span></td>
+          <td>PKR ${s.high_52w.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+          <td>PKR ${s.low_52w.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+          <td style="font-weight:600;">${(s.total_volume * 1e-6).toFixed(2)}M</td>
+          <td>${(s.avg_volume * 1e-3).toFixed(1)}K</td>
+          <td>${s.sessions.toLocaleString()}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function setupSectorPills() {
+      const container = document.getElementById('sector-pill-container');
+      const sectors = Array.from(new Set(db.symbols.map(s => s.sector))).sort();
+
+      sectors.forEach(sec => {
+        const pill = document.createElement('span');
+        pill.className = 'filter-pill';
+        pill.dataset.sector = sec;
+        pill.textContent = sec;
+        pill.addEventListener('click', () => {
+          document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          renderMasterTable(sec, document.getElementById('master-search').value);
+        });
+        container.appendChild(pill);
+      });
+
+      document.querySelector('.filter-pill[data-sector="ALL"]').addEventListener('click', function() {
+        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        renderMasterTable('ALL', document.getElementById('master-search').value);
+      });
+
+      document.getElementById('master-search').addEventListener('input', (e) => {
+        const activePill = document.querySelector('.filter-pill.active');
+        const activeSec = activePill ? activePill.dataset.sector : 'ALL';
+        renderMasterTable(activeSec, e.target.value);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', initializeReport);
+  </script>
+</body>
+</html>
